@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # 🔌 Productivity & Integrations
 
 Slack, GitHub, email, meetings, reminders, notes, scheduling, personal assistants.

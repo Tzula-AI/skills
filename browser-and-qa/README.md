@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # 🌐 Browser & QA
 
 Browser automation, web QA, screenshots, previews, simulators.

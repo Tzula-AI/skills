@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # 🚀 DevOps & Release
 
 CI/CD, deploys, shipping, git workflow, observability, monitoring, dependency/PR babysitting.

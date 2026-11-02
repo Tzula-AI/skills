@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # 👻 Kiro Crew Platform
 
 Skills specific to operating or developing the Kiro Crew platform itself (dashboard, widgets, crons, conductors, pets).

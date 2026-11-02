@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # 🗄️ Backend & Data
 
 APIs, databases, Postgres, data modeling, backend SDK usage.

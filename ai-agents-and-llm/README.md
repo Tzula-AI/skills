@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # 🤖 AI Agents & LLM
 
 Agent harnesses, context engineering, prompts, multi-agent orchestration, MLOps, evals, memory.

@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # 🧭 Planning & Product
 
 Specs, plans, brainstorming, ideation, strategy, task breakdown, app store/product.
