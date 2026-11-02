@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # 📝 Docs & Writing
 
 Docs, ADRs, papers, LaTeX, writing style, presentations, explanations.

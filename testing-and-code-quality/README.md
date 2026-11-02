@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # 🧪 Testing & Code Quality
 
 Tests, TDD, debugging, code review, refactoring/simplification, performance.

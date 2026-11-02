@@ -1,3 +1,5 @@
+<p align="center"><img src="../assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # 🛡️ Security
 
 Security reviews, hardening, auth, secrets, policy.

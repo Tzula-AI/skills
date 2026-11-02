@@ -1,3 +1,5 @@
+<p align="center"><img src="assets/tzula-header-dark.png" alt="Tzula" width="100%"></p>
+
 # Skills Library
 
 > A curated, categorized collection of **281 agent skills** for Claude Code, Kiro, Codex, OpenCode, Hermes and other `SKILL.md`-compatible agents.
