@@ -1,0 +1,19 @@
+#!/usr/bin/env node
+'use strict';
+// Extensionless entry file with no package.json "type" field nearby -> Node
+// parses this as CommonJS. We use `require` for the tiny bit of CJS glue we
+// need, then dynamically `import()` the real ESM implementation in lib/.
+const path = require('node:path');
+const { pathToFileURL } = require('node:url');
+
+const mainUrl = pathToFileURL(path.join(__dirname, '..', 'lib', 'main.mjs')).href;
+
+import(mainUrl)
+  .then((mod) => mod.main(process.argv.slice(2)))
+  .then((code) => {
+    process.exitCode = typeof code === 'number' ? code : 0;
+  })
+  .catch((err) => {
+    process.stderr.write(`quick-share: ${err && err.message ? err.message : String(err)}\n`);
+    process.exitCode = 1;
+  });

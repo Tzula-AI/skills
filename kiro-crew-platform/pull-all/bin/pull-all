@@ -1,0 +1,262 @@
+#!/usr/bin/env bash
+# pull-all — fetch + fast-forward every git repo directly under a root directory,
+# then `codegraph sync` the ones that actually moved.
+# Safe by default: never rewrites history, never discards work. Dirty or diverged
+# repos are reported and skipped unless you opt in with --stash / --rebase.
+set -uo pipefail
+
+ROOT="."; JOBS=8; STASH=0; REBASE=0; DRY=0; SUBS=0; LOGN=5; CODEGRAPH=1
+
+usage() {
+  cat <<'EOF'
+usage: pull-all [ROOT] [options]
+
+Fetches and fast-forwards each git repo found directly under ROOT (default: cwd).
+If ROOT itself is a repo toplevel, it is included too.
+
+Each repo whose HEAD moved is then re-indexed with `codegraph sync`, but only where
+a .codegraph/ index already exists. Never on --dry-run; never creates an index.
+
+options:
+  -j, --jobs N     parallel repos (default 8)
+      --stash      auto-stash uncommitted tracked changes around the pull
+      --rebase     rebase diverged branches onto upstream (uses --autostash)
+      --submodules run `git submodule update --init --recursive` after a pull
+      --dry-run    fetch + report only, never move HEAD
+      --log N      show up to N new commit subjects per pulled repo (0 = none)
+      --no-codegraph
+                   skip the codegraph re-index of pulled repos
+  -h, --help       this text
+
+exit: 0 all green, 1 a repo failed, 2 bad usage
+EOF
+}
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    -h|--help) usage; exit 0 ;;
+    --stash) STASH=1 ;;
+    --rebase) REBASE=1 ;;
+    --submodules) SUBS=1 ;;
+    --dry-run) DRY=1 ;;
+    --no-codegraph) CODEGRAPH=0 ;;
+    --log) LOGN="${2:?--log needs a number}"; shift ;;
+    -j|--jobs) JOBS="${2:?--jobs needs a number}"; shift ;;
+    -*) echo "pull-all: unknown option $1" >&2; usage >&2; exit 2 ;;
+    *) ROOT="$1" ;;
+  esac
+  shift
+done
+
+command -v git >/dev/null || { echo "pull-all: git not found" >&2; exit 2; }
+[ -d "$ROOT" ] || { echo "pull-all: not a directory: $ROOT" >&2; exit 2; }
+
+is_repo_top() { [ -e "$1/.git" ]; }
+
+REPOS=()
+is_repo_top "$ROOT" && REPOS+=("$ROOT")
+for d in "$ROOT"/*; do
+  [ -d "$d" ] || continue
+  is_repo_top "$d" && REPOS+=("$d")
+done
+if [ ${#REPOS[@]} -eq 0 ]; then
+  echo "pull-all: no git repos under $(cd "$ROOT" && pwd)"
+  exit 0
+fi
+
+TMP=$(mktemp -d) || exit 1
+trap 'rm -rf "$TMP"' EXIT
+
+# emit STATUS \t name \t branch \t detail  (+ optional indented extra lines)
+process() {
+  local dir="$1" out="$2" name branch up ahead behind head dirty rc detail
+  name=$(basename "$(cd "$dir" && pwd)")
+  : >"$out"
+  say() { printf '%s\t%s\t%s\t%s\n' "$1" "$name" "${2:-–}" "$3" >>"$out"; }
+
+  if ! git -C "$dir" fetch --prune --tags --quiet 2>"$TMP/$name.err"; then
+    say FAIL "" "fetch failed: $(tr '\n' ' ' <"$TMP/$name.err" | cut -c1-120)"
+    return
+  fi
+
+  branch=$(git -C "$dir" symbolic-ref --quiet --short HEAD)
+  if [ -z "$branch" ]; then
+    say SKIP "detached" "detached HEAD at $(git -C "$dir" rev-parse --short HEAD)"
+    return
+  fi
+  up=$(git -C "$dir" rev-parse --abbrev-ref --symbolic-full-name '@{u}' 2>/dev/null)
+  if [ -z "$up" ]; then
+    say SKIP "$branch" "no upstream tracking branch"
+    return
+  fi
+
+  read -r ahead behind < <(git -C "$dir" rev-list --left-right --count "HEAD...$up" | tr '\t' ' ')
+  if [ "$behind" -eq 0 ]; then
+    if [ "$ahead" -gt 0 ]; then say OK "$branch" "up to date (ahead $ahead of $up)"
+    else say OK "$branch" "up to date"; fi
+    return
+  fi
+
+  if [ "$DRY" -eq 1 ]; then
+    say DRY "$branch" "$behind behind $up$([ "$ahead" -gt 0 ] && echo ", $ahead ahead — diverged")"
+    return
+  fi
+
+  head=$(git -C "$dir" rev-parse HEAD)
+  # Tracked changes only: untracked files don't block a fast-forward, and if one
+  # would be clobbered git says so and we surface it as FAIL.
+  dirty=$(git -C "$dir" status --porcelain --untracked-files=no 2>/dev/null)
+
+  if [ "$ahead" -gt 0 ]; then
+    if [ "$REBASE" -eq 0 ]; then
+      say SKIP "$branch" "diverged ($ahead ahead / $behind behind $up) — rerun with --rebase"
+      return
+    fi
+    if ! git -C "$dir" rebase --autostash --quiet "$up" 2>"$TMP/$name.err"; then
+      git -C "$dir" rebase --abort 2>/dev/null
+      say FAIL "$branch" "rebase onto $up failed (aborted): $(tr '\n' ' ' <"$TMP/$name.err" | cut -c1-120)"
+      return
+    fi
+    detail="rebased $ahead onto $up (+$behind)"
+  else
+    if [ -n "$dirty" ]; then
+      if [ "$STASH" -eq 0 ]; then
+        say SKIP "$branch" "$behind behind $up, uncommitted changes — commit, or rerun with --stash"
+        return
+      fi
+      if ! git -C "$dir" stash push --quiet -m "pull-all $(date +%FT%T)" 2>"$TMP/$name.err"; then
+        say FAIL "$branch" "stash failed: $(tr '\n' ' ' <"$TMP/$name.err" | cut -c1-120)"
+        return
+      fi
+    fi
+    git -C "$dir" merge --ff-only --quiet "$up" 2>"$TMP/$name.err"; rc=$?
+    if [ -n "$dirty" ] && [ "$STASH" -eq 1 ]; then
+      if ! git -C "$dir" stash pop --quiet >>"$TMP/$name.err" 2>&1; then
+        # Conflicted pop leaves markers + a conflicted index. Git keeps the stash
+        # entry, so rewind to the clean pulled state and hand the repo back intact.
+        git -C "$dir" reset --hard --quiet HEAD 2>/dev/null
+        say FAIL "$branch" "pulled +$behind, but your changes conflict — restore them with: git -C $dir stash pop"
+        return
+      fi
+    fi
+    if [ $rc -ne 0 ]; then
+      say FAIL "$branch" "fast-forward failed: $(tr '\n' ' ' <"$TMP/$name.err" | cut -c1-120)"
+      return
+    fi
+    detail="+$behind commits from $up"
+  fi
+
+  if [ "$SUBS" -eq 1 ] && [ -f "$dir/.gitmodules" ]; then
+    git -C "$dir" submodule update --init --recursive --quiet 2>/dev/null \
+      && detail="$detail, submodules synced" || detail="$detail, submodule sync FAILED"
+  fi
+
+  # Marker for the codegraph phase: this repo's HEAD actually moved, so its
+  # index is now stale. Unmoved repos have nothing to sync.
+  printf '%s\n' "$dir" >"${out%.out}.pulled"
+  say PULLED "$branch" "$detail"
+  if [ "$LOGN" -gt 0 ]; then
+    git -C "$dir" log --no-merges --format='    %h %s' -n "$LOGN" "$head..HEAD" >>"$out" 2>/dev/null
+  fi
+}
+
+for i in "${!REPOS[@]}"; do
+  process "${REPOS[$i]}" "$TMP/$i.out" &
+  while [ "$(jobs -rp | wc -l)" -ge "$JOBS" ]; do wait -n 2>/dev/null || break; done
+done
+wait
+
+if [ -t 1 ]; then G=$'\e[32m'; Y=$'\e[33m'; R=$'\e[31m'; B=$'\e[1m'; Z=$'\e[0m'
+else G=; Y=; R=; B=; Z=; fi
+declare -A COUNT=([OK]=0 [PULLED]=0 [SKIP]=0 [FAIL]=0 [DRY]=0)
+W=0
+for i in "${!REPOS[@]}"; do
+  n=$(basename "$(cd "${REPOS[$i]}" && pwd)"); [ ${#n} -gt $W ] && W=${#n}
+done
+
+printf '%s%s%s\n' "$B" "$(cd "$ROOT" && pwd) — ${#REPOS[@]} repos" "$Z"
+for i in "${!REPOS[@]}"; do
+  [ -s "$TMP/$i.out" ] || continue
+  while IFS=$'\t' read -r st name branch detail; do
+    if [ -z "$name" ]; then printf '%s\n' "$st"; continue; fi
+    COUNT[$st]=$(( ${COUNT[$st]:-0} + 1 ))
+    case "$st" in
+      OK) c=$G ;; PULLED) c=$G ;; SKIP) c=$Y ;; DRY) c=$Y ;; *) c=$R ;;
+    esac
+    printf '  %s%-6s%s %-*s %-24s %s\n' "$c" "$st" "$Z" "$W" "$name" "$branch" "$detail"
+  done <"$TMP/$i.out"
+done
+printf '%s\n' "  ── ${COUNT[PULLED]} pulled, ${COUNT[OK]} current, ${COUNT[DRY]} pending, ${COUNT[SKIP]} skipped, ${COUNT[FAIL]} failed"
+
+# ---------------------------------------------------------------------------
+# codegraph re-index
+#
+# Only repos whose HEAD moved: `sync` means "changes since last index", so an
+# unmoved repo is a guaranteed no-op. Only repos already carrying .codegraph/ —
+# a first index is expensive and opting a repo into codegraph is the user's
+# call, not a side effect of pulling. A sync failure never changes the exit
+# code: pull-all's contract is about pulls.
+# ---------------------------------------------------------------------------
+CG_TARGETS=()
+if [ "$CODEGRAPH" -eq 1 ] && [ "$DRY" -eq 0 ]; then
+  for i in "${!REPOS[@]}"; do
+    [ -f "$TMP/$i.pulled" ] && CG_TARGETS+=("$(cat "$TMP/$i.pulled")")
+  done
+fi
+
+if [ ${#CG_TARGETS[@]} -gt 0 ]; then
+  printf '\n%s%s%s\n' "$B" "codegraph — ${#CG_TARGETS[@]} pulled repo(s)" "$Z"
+  if ! command -v codegraph >/dev/null 2>&1; then
+    printf '  %-6s %-*s %s\n' "SKIP" "$W" "–" "codegraph not on PATH — indexes left stale"
+  else
+    # A wedged indexer must not hang the whole run.
+    CG_TIMEOUT=(); command -v timeout >/dev/null 2>&1 && CG_TIMEOUT=(timeout 600)
+
+    cg_sync() {
+      local dir="$1" out="$2" name rc why
+      name=$(basename "$(cd "$dir" && pwd)")
+      : >"$out"
+      if [ ! -d "$dir/.codegraph" ]; then
+        printf 'SKIP\t%s\t%s\n' "$name" "no .codegraph index — codegraph init $dir" >"$out"
+        return
+      fi
+      # Deliberately NOT --quiet: it suppresses the failure reason too, which
+      # would leave a FAIL row with no cause. Output is captured and only
+      # surfaced when the sync actually fails.
+      "${CG_TIMEOUT[@]}" codegraph sync "$dir" >"$out.log" 2>&1; rc=$?
+      if [ "$rc" -eq 0 ]; then
+        printf 'SYNCED\t%s\t%s\n' "$name" "index updated" >"$out"
+        return
+      fi
+      if [ "$rc" -eq 124 ]; then
+        printf 'FAIL\t%s\t%s\n' "$name" "sync timed out after 600s" >"$out"
+        return
+      fi
+      why=$(sed 's/\x1b\[[0-9;]*m//g' "$out.log" | tr '\n' ' ' | tr -s ' ' | cut -c1-110)
+      printf 'FAIL\t%s\t%s\n' "$name" "sync failed (exit $rc): ${why:-no output}" >"$out"
+    }
+
+    for i in "${!CG_TARGETS[@]}"; do
+      cg_sync "${CG_TARGETS[$i]}" "$TMP/cg.$i" &
+      while [ "$(jobs -rp | wc -l)" -ge "$JOBS" ]; do wait -n 2>/dev/null || break; done
+    done
+    wait
+
+    cg_synced=0; cg_skipped=0; cg_failed=0
+    for i in "${!CG_TARGETS[@]}"; do
+      [ -s "$TMP/cg.$i" ] || continue
+      while IFS=$'\t' read -r st name detail; do
+        case "$st" in
+          SYNCED) c=$G; cg_synced=$((cg_synced + 1)) ;;
+          SKIP)   c=$Y; cg_skipped=$((cg_skipped + 1)) ;;
+          *)      c=$R; cg_failed=$((cg_failed + 1)) ;;
+        esac
+        printf '  %s%-6s%s %-*s %s\n' "$c" "$st" "$Z" "$W" "$name" "$detail"
+      done <"$TMP/cg.$i"
+    done
+    printf '%s\n' "  ── $cg_synced re-indexed, $cg_skipped skipped, $cg_failed failed"
+  fi
+fi
+
+[ "${COUNT[FAIL]}" -gt 0 ] && exit 1
+exit 0
