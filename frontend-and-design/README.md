@@ -15,7 +15,7 @@ UI engineering, visual design styles, design systems, Tailwind, layouts.
 | [`claude-design`](claude-design/SKILL.md) | Design one-off HTML artifacts (landing, deck, prototype). |
 | [`clean-minimal-beige-light-mode`](clean-minimal-beige-light-mode/SKILL.md) | Create a clean minimal beige light-mode design system with warm neutral shells, quiet process grids, restrained accent color, and elegant… |
 | [`container-lines`](container-lines/SKILL.md) | Add vertical container-size guide lines with mini corner squares for precise, structured web layouts. Use when asked for container lines, measured… |
-| [`design-consultation`](design-consultation/SKILL.md) | \| |
+| [`design-consultation`](design-consultation/SKILL.md) | Design consultation: understands your product, researches the landscape, proposes a complete design system (aesthetic, typography, color, layout,… |
 | [`design-first-ui-prompting`](design-first-ui-prompting/SKILL.md) | Use when you need design-first, spec-driven, skimmable prompts for UI generation. Covers prompt structure, constraints, variations,… |
 | [`design-md`](design-md/SKILL.md) | Author/validate/export Google's DESIGN.md token spec files. |
 | [`design-taste-frontend`](design-taste-frontend/SKILL.md) | Anti-slop frontend skill for landing pages, portfolios, and redesigns. The agent reads the brief, infers the right design direction, and ships… |

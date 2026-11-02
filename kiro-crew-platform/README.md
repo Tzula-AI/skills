@@ -24,11 +24,11 @@ Skills specific to operating or developing the Kiro Crew platform itself (dashbo
 | [`mochi-tips`](mochi-tips/SKILL.md) | Feature tips catalog for new users. Plan skill loads this to pick a tip during the first week. |
 | [`mochi-watch`](mochi-watch/SKILL.md) | Check one or more watch items, compare with last known status, suggest actions, and update the watchlist. |
 | [`pipeline-conductor`](pipeline-conductor/SKILL.md) | Operating procedure for the kirocrew-pipeline-conductor agent. Use when a pipeline conductor session is seeded, inspected or debugged. You MANAGE… |
-| [`pull-all`](pull-all/SKILL.md) | \| |
-| [`quick-share`](quick-share/SKILL.md) | \| |
+| [`pull-all`](pull-all/SKILL.md) | Pull the latest changes for every git repo in a directory (default: cwd), in parallel. Use when asked to "pull all the repos", "sync all repos",… |
+| [`quick-share`](quick-share/SKILL.md) | Deploy any local project directory or a single .html file to Vercel in one shot and print the live URL. Use when asked to "deploy this to vercel",… |
 | [`remote-crew-microvm`](remote-crew-microvm/SKILL.md) | Drive the AWS Lambda MicroVM remote-crew lane: check whether it is configured, hand the operator the cloud.json block when it is not, launch a… |
-| [`retro`](retro/SKILL.md) | \| |
-| [`review`](review/SKILL.md) | \| |
+| [`retro`](retro/SKILL.md) | Weekly engineering retrospective. Analyzes commit history, work patterns, and code quality metrics with persistent history and trend tracking.… |
+| [`review`](review/SKILL.md) | Pre-landing PR review. Analyzes diff against the base branch for SQL safety, LLM trust boundary violations, conditional side effects, and other… |
 | [`sdlc-review`](sdlc-review/SKILL.md) | Review Kanban handoffs and route verified outcomes. |
 | [`security-conductor`](security-conductor/SKILL.md) | Operating procedure for the kirocrew-security-conductor agent. Use when a security conductor session is seeded, inspected or debugged. Run… |
 | [`session-librarian`](session-librarian/SKILL.md) | Organize sessions by prompt: find, rename, archive, prune. |

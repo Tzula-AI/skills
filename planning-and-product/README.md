@@ -20,9 +20,9 @@ Specs, plans, brainstorming, ideation, strategy, task breakdown, app store/produ
 | [`incremental-implementation`](incremental-implementation/SKILL.md) | Delivers changes incrementally. Use when implementing any feature or change that touches more than one file. Use when you're about to write a… |
 | [`interview-me`](interview-me/SKILL.md) | Extracts what the user actually wants instead of what they think they should want. Achieves this through one-question-at-a-time interview until… |
 | [`plan`](plan/SKILL.md) | Write a markdown plan to .hermes/plans/; no execution. |
-| [`plan-ceo-review`](plan-ceo-review/SKILL.md) | \| |
-| [`plan-design-review`](plan-design-review/SKILL.md) | \| |
-| [`plan-eng-review`](plan-eng-review/SKILL.md) | \| |
+| [`plan-ceo-review`](plan-ceo-review/SKILL.md) | CEO/founder-mode plan review. Rethink the problem, find the 10-star product, challenge premises, expand scope when it creates a better product.… |
+| [`plan-design-review`](plan-design-review/SKILL.md) | Designer's eye review of a live site. Finds visual inconsistency, spacing issues, hierarchy problems, interaction feel, AI slop patterns,… |
+| [`plan-eng-review`](plan-eng-review/SKILL.md) | Eng manager-mode plan review. Lock in the execution plan — architecture, data flow, diagrams, edge cases, test coverage, performance. Walks… |
 | [`planning-and-task-breakdown`](planning-and-task-breakdown/SKILL.md) | Breaks work into ordered tasks. Use when you have a spec or clear requirements and need to break work into implementable tasks. Use when a task… |
 | [`spec-driven-development`](spec-driven-development/SKILL.md) | Creates specs before coding. Use when starting a new project, feature, or significant change and no specification exists yet. Use when… |
 | [`spike`](spike/SKILL.md) | Throwaway experiments to validate an idea before build. |

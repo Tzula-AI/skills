@@ -12,7 +12,7 @@ Docs, ADRs, papers, LaTeX, writing style, presentations, explanations.
 | [`ce-promote`](ce-promote/SKILL.md) | Draft launch or promotion copy for a shipped feature. |
 | [`ce-proof`](ce-proof/SKILL.md) | Publish, read, comment on, or edit markdown in Proof. Use for Proof links, sharing specs/plans/drafts, or publish handoffs from planning… |
 | [`codemap`](codemap/SKILL.md) | Generate comprehensive hierarchical codemaps for UNFAMILIAR repositories. Expensive operation - only use when explicitly asked for codebase… |
-| [`document-release`](document-release/SKILL.md) | \| |
+| [`document-release`](document-release/SKILL.md) | Post-ship documentation update. Reads all project docs, cross-references the diff, updates README/ARCHITECTURE/CONTRIBUTING/CLAUDE.md to match… |
 | [`documentation-and-adrs`](documentation-and-adrs/SKILL.md) | Records decisions and documentation. Use when making architectural decisions, changing public APIs, shipping features, or when you need to record… |
 | [`docx`](docx/SKILL.md) | Create, read, edit, template, and review Word .docx files. |
 | [`excalidraw`](excalidraw/SKILL.md) | Hand-drawn Excalidraw JSON diagrams (arch, flow, seq). |

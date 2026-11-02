@@ -50,7 +50,7 @@ _UI engineering, visual design styles, design systems, Tailwind, layouts._
 | [`claude-design`](frontend-and-design/claude-design/) | Design one-off HTML artifacts (landing, deck, prototype). |
 | [`clean-minimal-beige-light-mode`](frontend-and-design/clean-minimal-beige-light-mode/) | Create a clean minimal beige light-mode design system with warm neutral shells, quiet process grids, restrained accent color, and elegant… |
 | [`container-lines`](frontend-and-design/container-lines/) | Add vertical container-size guide lines with mini corner squares for precise, structured web layouts. Use when asked for container lines, measured… |
-| [`design-consultation`](frontend-and-design/design-consultation/) | \| |
+| [`design-consultation`](frontend-and-design/design-consultation/) | Design consultation: understands your product, researches the landscape, proposes a complete design system (aesthetic, typography, color, layout,… |
 | [`design-first-ui-prompting`](frontend-and-design/design-first-ui-prompting/) | Use when you need design-first, spec-driven, skimmable prompts for UI generation. Covers prompt structure, constraints, variations,… |
 | [`design-md`](frontend-and-design/design-md/) | Author/validate/export Google's DESIGN.md token spec files. |
 | [`design-taste-frontend`](frontend-and-design/design-taste-frontend/) | Anti-slop frontend skill for landing pages, portfolios, and redesigns. The agent reads the brief, infers the right design direction, and ships… |
@@ -103,11 +103,11 @@ _Skills specific to operating or developing the Kiro Crew platform itself (dashb
 | [`mochi-tips`](kiro-crew-platform/mochi-tips/) | Feature tips catalog for new users. Plan skill loads this to pick a tip during the first week. |
 | [`mochi-watch`](kiro-crew-platform/mochi-watch/) | Check one or more watch items, compare with last known status, suggest actions, and update the watchlist. |
 | [`pipeline-conductor`](kiro-crew-platform/pipeline-conductor/) | Operating procedure for the kirocrew-pipeline-conductor agent. Use when a pipeline conductor session is seeded, inspected or debugged. You MANAGE… |
-| [`pull-all`](kiro-crew-platform/pull-all/) | \| |
-| [`quick-share`](kiro-crew-platform/quick-share/) | \| |
+| [`pull-all`](kiro-crew-platform/pull-all/) | Pull the latest changes for every git repo in a directory (default: cwd), in parallel. Use when asked to "pull all the repos", "sync all repos",… |
+| [`quick-share`](kiro-crew-platform/quick-share/) | Deploy any local project directory or a single .html file to Vercel in one shot and print the live URL. Use when asked to "deploy this to vercel",… |
 | [`remote-crew-microvm`](kiro-crew-platform/remote-crew-microvm/) | Drive the AWS Lambda MicroVM remote-crew lane: check whether it is configured, hand the operator the cloud.json block when it is not, launch a… |
-| [`retro`](kiro-crew-platform/retro/) | \| |
-| [`review`](kiro-crew-platform/review/) | \| |
+| [`retro`](kiro-crew-platform/retro/) | Weekly engineering retrospective. Analyzes commit history, work patterns, and code quality metrics with persistent history and trend tracking.… |
+| [`review`](kiro-crew-platform/review/) | Pre-landing PR review. Analyzes diff against the base branch for SQL safety, LLM trust boundary violations, conditional side effects, and other… |
 | [`sdlc-review`](kiro-crew-platform/sdlc-review/) | Review Kanban handoffs and route verified outcomes. |
 | [`security-conductor`](kiro-crew-platform/security-conductor/) | Operating procedure for the kirocrew-security-conductor agent. Use when a security conductor session is seeded, inspected or debugged. Run… |
 | [`session-librarian`](kiro-crew-platform/session-librarian/) | Organize sessions by prompt: find, rename, archive, prune. |
@@ -166,7 +166,7 @@ _Docs, ADRs, papers, LaTeX, writing style, presentations, explanations._
 | [`ce-promote`](docs-and-writing/ce-promote/) | Draft launch or promotion copy for a shipped feature. |
 | [`ce-proof`](docs-and-writing/ce-proof/) | Publish, read, comment on, or edit markdown in Proof. Use for Proof links, sharing specs/plans/drafts, or publish handoffs from planning… |
 | [`codemap`](docs-and-writing/codemap/) | Generate comprehensive hierarchical codemaps for UNFAMILIAR repositories. Expensive operation - only use when explicitly asked for codebase… |
-| [`document-release`](docs-and-writing/document-release/) | \| |
+| [`document-release`](docs-and-writing/document-release/) | Post-ship documentation update. Reads all project docs, cross-references the diff, updates README/ARCHITECTURE/CONTRIBUTING/CLAUDE.md to match… |
 | [`documentation-and-adrs`](docs-and-writing/documentation-and-adrs/) | Records decisions and documentation. Use when making architectural decisions, changing public APIs, shipping features, or when you need to record… |
 | [`docx`](docs-and-writing/docx/) | Create, read, edit, template, and review Word .docx files. |
 | [`excalidraw`](docs-and-writing/excalidraw/) | Hand-drawn Excalidraw JSON diagrams (arch, flow, seq). |
@@ -204,7 +204,7 @@ _CI/CD, deploys, shipping, git workflow, observability, monitoring, dependency/P
 | [`ce-work`](devops-and-release/ce-work/) | Execute a plan or concrete work prompt end-to-end. Use when implementing from a plan document, a spec path, or a clear build request; use ce-debug… |
 | [`ce-worktree`](devops-and-release/ce-worktree/) | Set up isolated git worktrees — create a new branch for fresh work, or attach a worktree to an existing branch/PR/commit to work on it in… |
 | [`ci-cd-and-automation`](devops-and-release/ci-cd-and-automation/) | Automates CI/CD pipeline setup. Use when setting up or modifying build and deployment pipelines. Use when you need to automate quality gates,… |
-| [`debtap-deb-to-arch`](devops-and-release/debtap-deb-to-arch/) | \| |
+| [`debtap-deb-to-arch`](devops-and-release/debtap-deb-to-arch/) | Convert a vendor .deb package to a pacman package with debtap and install it on Arch/Manjaro, wiring up a user-level CLI command and desktop… |
 | [`deprecation-and-migration`](devops-and-release/deprecation-and-migration/) | Manages deprecation and migration. Use when removing old systems, APIs, or features. Use when migrating users from one implementation to another.… |
 | [`git-workflow-and-versioning`](devops-and-release/git-workflow-and-versioning/) | Structures git workflow practices. Use when making any code change. Use when committing, branching, resolving conflicts, or when you need to… |
 | [`github-auth`](devops-and-release/github-auth/) | GitHub auth setup: HTTPS tokens, SSH keys, gh CLI login. |
@@ -212,14 +212,14 @@ _CI/CD, deploys, shipping, git workflow, observability, monitoring, dependency/P
 | [`github-issue-to-pr`](devops-and-release/github-issue-to-pr/) | Carry a GitHub issue to a verified PR with honest CI state. |
 | [`github-pr-workflow`](devops-and-release/github-pr-workflow/) | GitHub PR lifecycle: branch, commit, open, CI, merge. |
 | [`github-repo-management`](devops-and-release/github-repo-management/) | Clone/create/fork repos; manage remotes, releases. |
-| [`gstack`](devops-and-release/gstack/) | \| |
-| [`gstack-upgrade`](devops-and-release/gstack-upgrade/) | \| |
+| [`gstack`](devops-and-release/gstack/) | Fast headless browser for QA testing and site dogfooding. Navigate any URL, interact with elements, verify page state, diff before/after actions,… |
+| [`gstack-upgrade`](devops-and-release/gstack-upgrade/) | Upgrade gstack to the latest version. Detects global vs vendored install, runs the upgrade, and shows what's new. |
 | [`lfg`](devops-and-release/lfg/) | Run the full autonomous shipping pipeline end-to-end, hands-off with no check-ins: plan, implement, review and fix, commit, push a branch, open a… |
 | [`merge-reconciler`](devops-and-release/merge-reconciler/) | Neutral third-party resolution of agent merge conflicts. |
 | [`observability-and-instrumentation`](devops-and-release/observability-and-instrumentation/) | Instruments code so production behavior is visible and diagnosable. Use when adding logging, metrics, tracing, or alerting. Use when shipping any… |
 | [`ops-mission-control`](devops-and-release/ops-mission-control/) | Investigate and triage operational signals — alarms, pages, monitors, and ops issues — using the Ops Mission Control incident board and knowledge… |
 | [`pre-push-ci`](devops-and-release/pre-push-ci/) | Verify CI will pass BEFORE pushing. Use when pushing to git, opening a PR, or merging. Reads the project's CI config, runs the equivalent steps… |
-| [`ship`](devops-and-release/ship/) | \| |
+| [`ship`](devops-and-release/ship/) | Ship workflow: detect + merge base branch, run tests, review diff, bump VERSION, update CHANGELOG, commit, push, create PR. |
 | [`shipping-and-launch`](devops-and-release/shipping-and-launch/) | Prepares production launches. Use when preparing to deploy to production. Use when you need a pre-launch checklist, when setting up monitoring,… |
 
 ## ☁️ Cloud AWS
@@ -229,31 +229,31 @@ _AWS services, IaC (CDK/CloudFormation), cloud auth and cost._
 
 | Skill | Description |
 |---|---|
-| [`amazon-bedrock`](cloud-aws/amazon-bedrock/) | >- |
+| [`amazon-bedrock`](cloud-aws/amazon-bedrock/) | Builds generative AI applications on Amazon Bedrock. Covers model invocation (Converse API, InvokeModel), RAG with Knowledge Bases, Bedrock… |
 | [`artifact-deploy`](cloud-aws/artifact-deploy/) | One-click deploy a user's pre-built app/artifact into their OWN AWS account and get a global public HTTPS link (Vercel-like), with a default TTL… |
-| [`aws-ai-ml`](cloud-aws/aws-ai-ml/) | >- |
-| [`aws-auth`](cloud-aws/aws-auth/) | >- |
-| [`aws-billing-and-cost-management`](cloud-aws/aws-billing-and-cost-management/) | >- |
-| [`aws-blocks`](cloud-aws/aws-blocks/) | >- |
-| [`aws-cdk`](cloud-aws/aws-cdk/) | >- |
-| [`aws-cloudformation`](cloud-aws/aws-cloudformation/) | >- |
-| [`aws-compute`](cloud-aws/aws-compute/) | >- |
-| [`aws-containers`](cloud-aws/aws-containers/) | >- |
-| [`aws-database`](cloud-aws/aws-database/) | >- |
-| [`aws-deployment`](cloud-aws/aws-deployment/) | >- |
-| [`aws-iam`](cloud-aws/aws-iam/) | >- |
-| [`aws-messaging-and-streaming`](cloud-aws/aws-messaging-and-streaming/) | >- |
-| [`aws-networking`](cloud-aws/aws-networking/) | >- |
-| [`aws-observability`](cloud-aws/aws-observability/) | >- |
-| [`aws-sdk-js-v3-usage`](cloud-aws/aws-sdk-js-v3-usage/) | >- |
-| [`aws-sdk-python-usage`](cloud-aws/aws-sdk-python-usage/) | >- |
-| [`aws-sdk-swift-usage`](cloud-aws/aws-sdk-swift-usage/) | >- |
-| [`aws-serverless`](cloud-aws/aws-serverless/) | >- |
-| [`aws-storage`](cloud-aws/aws-storage/) | >- |
-| [`aws-well-architected-review`](cloud-aws/aws-well-architected-review/) | >- |
+| [`aws-ai-ml`](cloud-aws/aws-ai-ml/) | Selects, deploys, and customizes AI models on Amazon SageMaker. Training or Processing jobs, fine-tuning (SFT/DPO/RLVR/RLAIF), model selection,… |
+| [`aws-auth`](cloud-aws/aws-auth/) | Adds user authentication to web and mobile apps with Amazon Cognito (user pools and identity pools) and the AWS Amplify client auth libraries.… |
+| [`aws-billing-and-cost-management`](cloud-aws/aws-billing-and-cost-management/) | Analyze AWS costs, find savings, manage budgets, evaluate Savings Plans and Reserved Instances, right-size EC2/Lambda/RDS/EBS with Compute… |
+| [`aws-blocks`](cloud-aws/aws-blocks/) | Guides building full-stack applications with AWS Blocks — an Infrastructure-from-Code framework. Applies when creating APIs, selecting Building… |
+| [`aws-cdk`](cloud-aws/aws-cdk/) | Authors, deploys, and troubleshoots AWS infrastructure using CDK with TypeScript or Python. Covers best practices, stack architecture, and… |
+| [`aws-cloudformation`](cloud-aws/aws-cloudformation/) | Authors, validates, and troubleshoots AWS CloudFormation templates. Covers template authoring with secure defaults, local validation with either… |
+| [`aws-compute`](cloud-aws/aws-compute/) | Provisions, scales, and operates Amazon EC2 virtual-machine workloads: instance-type selection (Graviton/Arm64, burstable T credits, GPU, instance… |
+| [`aws-containers`](cloud-aws/aws-containers/) | Builds, deploys, debugs, and optimizes containerized workloads on Amazon EKS, ECS, Fargate, ECR, and Elastic Beanstalk. Covers EKS operations and… |
+| [`aws-database`](cloud-aws/aws-database/) | Routes any task involving AWS databases — choosing, comparing, recommending, getting started with, or operating a database — to the correct… |
+| [`aws-deployment`](cloud-aws/aws-deployment/) | Configures CI/CD pipelines using AWS CodePipeline, CodeBuild, CodeDeploy, CodeConnections, and CodeArtifact. Covers CodePipeline V2 (triggers,… |
+| [`aws-iam`](cloud-aws/aws-iam/) | Provides verified corrections for IAM behaviors that AI agents frequently get wrong — policy evaluation edge cases, trust policy gotchas, STS… |
+| [`aws-messaging-and-streaming`](cloud-aws/aws-messaging-and-streaming/) | Guides general use of AWS messaging and streaming services. Covers Amazon SQS, Amazon SNS, Amazon EventBridge, Amazon MQ, Amazon Kinesis Data… |
+| [`aws-networking`](cloud-aws/aws-networking/) | Routes AWS networking requests to the correct service skill for implementation. Covers Route 53 (DNS, health checks, routing policies, Resolver,… |
+| [`aws-observability`](cloud-aws/aws-observability/) | Investigates root causes on the Omni context graph (service dependencies) and Intelligence insights; builds, configures, debugs, tunes AWS… |
+| [`aws-sdk-js-v3-usage`](cloud-aws/aws-sdk-js-v3-usage/) | AWS SDK for JavaScript v3 development patterns. Use when writing JavaScript or TypeScript code that uses AWS services via @aws-sdk/* packages… |
+| [`aws-sdk-python-usage`](cloud-aws/aws-sdk-python-usage/) | AWS SDK for Python (boto3/botocore) development patterns. You MUST use this skill when writing Python code that uses AWS services via boto3 or… |
+| [`aws-sdk-swift-usage`](cloud-aws/aws-sdk-swift-usage/) | AWS SDK for Swift development patterns. Use when writing Swift code that uses AWS services via aws-sdk-swift package. |
+| [`aws-serverless`](cloud-aws/aws-serverless/) | Routes serverless requests to a compute form factor and the skill that owns it. Applies first to Lambda, API Gateway, EventBridge, Step Functions… |
+| [`aws-storage`](cloud-aws/aws-storage/) | Selects, investigates, and compares AWS object, file, and block storage services, and answers cost, performance, configuration, security, and… |
+| [`aws-well-architected-review`](cloud-aws/aws-well-architected-review/) | Performs a full AWS Well-Architected Framework review evaluating every framework question across all pillars discovered from the live AWS… |
 | [`deploy-web`](cloud-aws/deploy-web/) | Publish a Kiro Crew artifact (HTML / markdown / widget) to a public HTTPS URL on the user's own AWS account (private S3 + CloudFront + OAC). Use… |
-| [`launch-with-aws`](cloud-aws/launch-with-aws/) | >- |
-| [`signing-in-to-aws`](cloud-aws/signing-in-to-aws/) | >- |
+| [`launch-with-aws`](cloud-aws/launch-with-aws/) | Migrates vibe-coded web applications to AWS. Handles the full workflow from analysis through migration to deployment, producing deployable AWS… |
+| [`signing-in-to-aws`](cloud-aws/signing-in-to-aws/) | Gets AWS credentials for CLI/SDK access via `aws login`. Activates when a developer needs to authenticate to AWS for local development, when an… |
 
 ## 🧪 Testing & Code Quality
 <a id="testing-and-code-quality"></a>
@@ -307,9 +307,9 @@ _Specs, plans, brainstorming, ideation, strategy, task breakdown, app store/prod
 | [`incremental-implementation`](planning-and-product/incremental-implementation/) | Delivers changes incrementally. Use when implementing any feature or change that touches more than one file. Use when you're about to write a… |
 | [`interview-me`](planning-and-product/interview-me/) | Extracts what the user actually wants instead of what they think they should want. Achieves this through one-question-at-a-time interview until… |
 | [`plan`](planning-and-product/plan/) | Write a markdown plan to .hermes/plans/; no execution. |
-| [`plan-ceo-review`](planning-and-product/plan-ceo-review/) | \| |
-| [`plan-design-review`](planning-and-product/plan-design-review/) | \| |
-| [`plan-eng-review`](planning-and-product/plan-eng-review/) | \| |
+| [`plan-ceo-review`](planning-and-product/plan-ceo-review/) | CEO/founder-mode plan review. Rethink the problem, find the 10-star product, challenge premises, expand scope when it creates a better product.… |
+| [`plan-design-review`](planning-and-product/plan-design-review/) | Designer's eye review of a live site. Finds visual inconsistency, spacing issues, hierarchy problems, interaction feel, AI slop patterns,… |
+| [`plan-eng-review`](planning-and-product/plan-eng-review/) | Eng manager-mode plan review. Lock in the execution plan — architecture, data flow, diagrams, edge cases, test coverage, performance. Walks… |
 | [`planning-and-task-breakdown`](planning-and-product/planning-and-task-breakdown/) | Breaks work into ordered tasks. Use when you have a spec or clear requirements and need to break work into implementable tasks. Use when a task… |
 | [`spec-driven-development`](planning-and-product/spec-driven-development/) | Creates specs before coding. Use when starting a new project, feature, or significant change and no specification exists yet. Use when… |
 | [`spike`](planning-and-product/spike/) | Throwaway experiments to validate an idea before build. |
@@ -355,7 +355,7 @@ _Browser automation, web QA, screenshots, previews, simulators._
 |---|---|
 | [`agent-browser`](browser-and-qa/agent-browser/) | Browser automation CLI for AI agents. Use when the user needs to interact with websites, including navigating pages, filling forms, clicking… |
 | [`blocked-page-recovery`](browser-and-qa/blocked-page-recovery/) | Recover blocked/paywalled/WAF'd pages via fallbacks. |
-| [`browse`](browser-and-qa/browse/) | \| |
+| [`browse`](browser-and-qa/browse/) | Fast headless browser for QA testing and site dogfooding. Navigate any URL, interact with elements, verify page state, diff before/after actions,… |
 | [`browser-auth`](browser-and-qa/browser-auth/) | Browse sites that need a logged-in session with playwright-cli, using attach mode, saved storage state, or individual cookies. Use when a page is… |
 | [`browser-recording`](browser-and-qa/browser-recording/) | Record a browser flow as video/GIF evidence for animations, transitions and multi-step interactions a still screenshot cannot prove. Uses the… |
 | [`ce-dogfood`](browser-and-qa/ce-dogfood/) | Hands-off, diff-scoped browser QA of the active branch: maps user flows, drives a real browser, autonomously fixes small breakages with regression… |
@@ -365,10 +365,10 @@ _Browser automation, web QA, screenshots, previews, simulators._
 | [`dogfood`](browser-and-qa/dogfood/) | Exploratory QA of web apps: find bugs, evidence, reports. |
 | [`inspecting-hermes-desktop-dom`](browser-and-qa/inspecting-hermes-desktop-dom/) | Read the live Hermes desktop DOM/CSS over CDP. |
 | [`ios-simulator-preview`](browser-and-qa/ios-simulator-preview/) | Show a live iOS Simulator in the dashboard's Browser side panel while building or testing an iOS app. Use when the user asks to preview an… |
-| [`qa`](browser-and-qa/qa/) | \| |
-| [`qa-design-review`](browser-and-qa/qa-design-review/) | \| |
-| [`qa-only`](browser-and-qa/qa-only/) | \| |
-| [`setup-browser-cookies`](browser-and-qa/setup-browser-cookies/) | \| |
+| [`qa`](browser-and-qa/qa/) | Systematically QA test a web application and fix bugs found. Runs QA testing, then iteratively fixes bugs in source code, committing each fix… |
+| [`qa-design-review`](browser-and-qa/qa-design-review/) | Designer's eye QA: finds visual inconsistency, spacing issues, hierarchy problems, AI slop patterns, and slow interactions — then fixes them.… |
+| [`qa-only`](browser-and-qa/qa-only/) | Report-only QA testing. Systematically tests a web application and produces a structured report with health score, screenshots, and repro steps —… |
+| [`setup-browser-cookies`](browser-and-qa/setup-browser-cookies/) | Import cookies from your real browser (Comet, Chrome, Arc, Brave, Edge) into the headless browse session. Opens an interactive picker UI where you… |
 | [`web-browse`](browser-and-qa/web-browse/) | Open a REAL external web page in Kiro Crew's Browser panel. Primary path is the `browser` MCP tool (native panel); playwright-cli is the fallback… |
 | [`web-preview`](browser-and-qa/web-preview/) | Emit a hidden preview marker so the right-panel Browser tab opens a Load-preview card for a local server URL. Use whenever you start a dev or… |
 | [`web-verify`](browser-and-qa/web-verify/) | Use after a user-visible UI edit to verify your OWN change on an isolated loopback server. Capture, read and show real screenshots. Backends:… |
@@ -415,7 +415,7 @@ _Security reviews, hardening, auth, secrets, policy._
 
 | Skill | Description |
 |---|---|
-| [`aws-security`](security/aws-security/) | >- |
+| [`aws-security`](security/aws-security/) | Covers AWS security services and workflows — Security Hub V2 (OCSF) findings, connectors, aggregators, automation rules, and security posture… |
 | [`blocked-by-policy`](security/blocked-by-policy/) | What to do when a Kiro Crew safety policy blocks a tool call — tell a policy block from a user refusal, then take the sanctioned path for its… |
 | [`security-and-hardening`](security/security-and-hardening/) | Hardens code against vulnerabilities. Use when handling user input, authentication, data storage, or external integrations. Use when building any… |
 
